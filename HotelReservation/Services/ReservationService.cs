@@ -1,5 +1,6 @@
 ﻿using HotelReservation.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace HotelReservation.Services
 {
@@ -7,9 +8,9 @@ namespace HotelReservation.Services
     {
         public ReservationService()
         {
-            Reservations = new List<Reservation>();
+            Reservations = new ObservableCollection<Reservation>();
         }
         
-        public List<Reservation> Reservations { get; set; }
+        public ObservableCollection<Reservation> Reservations { get; set; }
     }
 }

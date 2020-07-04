@@ -1,15 +1,16 @@
 ﻿using HotelReservation.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace HotelReservation.Services
 {
-    class ClientService
+    public class ClientService
     {
-        public ClientService() 
+        public ClientService()
         {
-            Clients = new List<Client>();
+            Clients = new ObservableCollection<Client>();
         }
 
-        public List<Client> Clients { get; set; }
+        public ObservableCollection<Client> Clients { get; set; }
     }
 }

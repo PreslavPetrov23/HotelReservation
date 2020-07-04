@@ -1,16 +1,57 @@
-﻿namespace HotelReservation.Models
+﻿using Prism.Mvvm;
+using System;
+
+namespace HotelReservation.Models
 {
-    public class Room
+    public class Room : BindableBase
     {
-        public int Id { get; set; }
+        private int id;
 
-        public string RoomNumber { get; set; }
+        private string roomNumber;
 
-        public string Extras { get; set; }
+        private string extras;
 
-        //NumericUpDown
-        public int RoomCapacity{ get; set; }
+        private string roomCapacity;
 
-        public string RoomLocation { get; set; }
+        private string roomLocation;
+
+        public int Id
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
+
+
+        public string RoomNumber
+        {
+            get { return roomNumber; }
+            set { SetProperty(ref roomNumber, value); }
+        }
+
+        public string Extras
+        {
+            get { return extras; }
+            set { SetProperty(ref extras, value); }
+        }
+
+        public string RoomCapacity {
+            get { return roomCapacity; }
+            set { SetProperty(ref roomCapacity, value); }
+        }
+
+        public string RoomLocation
+        {
+            get { return roomLocation; }
+            set { SetProperty(ref roomLocation, value); }
+        }
+
+        public void Copy(Room copy)
+        {
+            Id = copy.Id;
+            RoomNumber = copy.RoomNumber;
+            Extras = copy.Extras;
+            RoomCapacity = copy.RoomCapacity;
+            RoomLocation = copy.RoomLocation;
+        }
     }
 }

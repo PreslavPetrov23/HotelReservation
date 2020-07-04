@@ -24,20 +24,20 @@
                     <MenuItem x:Name="ClientDelete" Header="Delete" Command="{Binding DeleteClientCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Reservation">
-                    <MenuItem x:Name="ReservationAdd" Header="Add"/>
-                    <MenuItem x:Name="ReservationUpdate" Header="Update"/>
-                    <MenuItem x:Name="ReservationDelete" Header="Delete"/>
+                    <MenuItem x:Name="ReservationAdd" Header="Add" Command="{Binding AddReservationCommand}"/>
+                    <MenuItem x:Name="ReservationUpdate" Header="Update" Command="{Binding UpdateReservationCommand}"/>
+                        <MenuItem x:Name="ReservationDelete" Header="Delete" Command="{Binding DeleteReservationCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Room">
-                    <MenuItem x:Name="RoomAdd" Header="Add"/>
-                    <MenuItem x:Name="RoomUpdate" Header="Update"/>
-                    <MenuItem x:Name="RoomDelete" Header="Delete"/>
+                    <MenuItem x:Name="RoomAdd" Header="Add" Command="{Binding AddRoomCommand}"/>
+                    <MenuItem x:Name="RoomUpdate" Header="Update" Command="{Binding UpdateRoomCommand}"/>
+                    <MenuItem x:Name="RoomDelete" Header="Delete" Command="{Binding DeleteRoomCommand}"/>
                 </MenuItem>
             </Menu>
         </Grid>
         <TabControl Grid.Row="1">
             <TabItem Header="Client">
-                <DataGrid ItemsSource="{Binding ClientsData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" 
+                <DataGrid ItemsSource="{Binding ClientsData, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" 
                           CurrentItem="{Binding Client, Mode=TwoWay}" SelectionMode="Single" SelectionUnit="FullRow" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Personal Number" Binding= "{Binding PersonalNumber}"/>
@@ -48,14 +48,26 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Reservation">
-                <DataGrid ItemsSource="{Binding ClientsData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" 
-                          CurrentItem="{Binding Client, Mode=TwoWay}" SelectionMode="Single" SelectionUnit="FullRow" >
+                <DataGrid ItemsSource="{Binding ReservationData, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" 
+                          CurrentItem="{Binding Reservation, Mode=TwoWay}" SelectionMode="Single" SelectionUnit="FullRow" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Check in" Binding= "{Binding StartDate}"/>
                         <DataGridTextColumn Header="Check out" Binding="{Binding EndDate}"/>
                         <DataGridTextColumn Header="Comments" Binding="{Binding Comments}"/>
-                        <DataGridTextColumn Header="Personal ID" Binding="{Binding ClientId}"/>
-                        <DataGridTextColumn Header="Room ID" Binding="{Binding RoomId}"/>
+                        <DataGridTextColumn Header="Client" Binding="{Binding Client.FullName}"/>
+                        <DataGridTextColumn Header="Room" Binding="{Binding Room.RoomNumber}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Room">
+                <DataGrid ItemsSource="{Binding RoomsData, UpdateSourceTrigger=PropertyChanged}" 
+                          AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          CurrentItem="{Binding Room, Mode=TwoWay}" SelectionMode="Single">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Room Number" Binding= "{Binding RoomNumber}"/>
+                        <DataGridTextColumn Header="Room Capacity" Binding="{Binding RoomCapacity}"/>
+                        <DataGridTextColumn Header="Room Location" Binding="{Binding RoomLocation}"/>
+                        <DataGridTextColumn Header="Extras" Binding="{Binding Extras}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

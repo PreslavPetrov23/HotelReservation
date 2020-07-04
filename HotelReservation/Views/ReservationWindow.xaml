@@ -29,10 +29,18 @@
             </Grid.RowDefinitions>
             
             <Label Grid.Column="0" Grid.Row="0" Content="Client:"/>
-            <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding Reservation.ClientId,Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}"/>
+            <ComboBox Grid.Column="1" Grid.Row="0"
+                      ItemsSource="{Binding  ClientsData}" DisplayMemberPath="FullName" SelectedValuePath="Id"
+                      SelectedValue="{Binding Reservation.ClientId, Mode=TwoWay}"
+                      SelectedItem="{Binding Reservation.Client, Mode=OneWayToSource}"
+                      Style="{StaticResource ComboBoxStyle}"/>
             
-            <Label Grid.Column="0" Grid.Row="1" Content="Room :"/>
-            <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding Reservation.RoomId,Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="Room:"/>
+            <ComboBox Grid.Column="1" Grid.Row="1"
+                      ItemsSource="{Binding RoomsData}" DisplayMemberPath="RoomNumber" SelectedValuePath="Id"
+                      SelectedValue="{Binding Reservation.RoomId, Mode=TwoWay}"
+                      SelectedItem="{Binding Reservation.Room, Mode=OneWayToSource}"
+                      Style="{StaticResource ComboBoxStyle}"/>
 
             <Label Grid.Column="0" Grid.Row="2" Content="Check out Date:"/>
             <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding Reservation.EndDate,Mode=TwoWay}" Style="{StaticResource DatePickerStyle}"/>
