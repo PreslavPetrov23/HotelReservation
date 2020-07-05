@@ -41,7 +41,6 @@ namespace HotelReservation.Services
                 var rooms = JsonConvert.DeserializeObject<List<Room>>(json);
                 hotelRepository.RoomService.Rooms.Clear();
                 hotelRepository.RoomService.Rooms.AddRange(rooms);
-
             }
 
             if (File.Exists(ReservationFileName))
