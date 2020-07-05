@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
@@ -51,12 +52,14 @@ namespace HotelReservation.Models
             set { SetProperty(ref roomId, value); }
         }
 
+        [JsonIgnore]
         public Room Room
         {
             get { return room; }
             set { SetProperty(ref room, value); }
         }
 
+        [JsonIgnore]
         public Client Client
         {
             get { return client; }

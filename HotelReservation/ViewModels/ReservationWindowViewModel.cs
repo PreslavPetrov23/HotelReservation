@@ -18,7 +18,7 @@ namespace HotelReservation
         public ReservationWindowViewModel()
         {
             this.Reservation = new Reservation();
-            hotelRepository = HotelRepository.Intance;
+            hotelRepository = HotelRepository.Instance;
         }
 
         public Reservation Reservation

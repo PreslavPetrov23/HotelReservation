@@ -30,7 +30,7 @@ namespace HotelReservation
             DeleteRoomCommand = new DelegateCommand(OnDeleteRoomCommand, () => Room != null);
             UpdateRoomCommand = new DelegateCommand(OnUpdateRoomCommand, () => Room != null);
 
-            hotelRepository = HotelRepository.Intance;
+            hotelRepository = HotelRepository.Instance;
         }
 
         public ObservableCollection<Client> ClientsData

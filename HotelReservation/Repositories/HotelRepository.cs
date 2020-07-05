@@ -12,7 +12,7 @@ namespace HotelReservation.Repositories
     {
         private static HotelRepository hotelRepository;
 
-        public static HotelRepository Intance
+        public static HotelRepository Instance
         {
             get
             {
