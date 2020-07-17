@@ -74,17 +74,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\InvoiceLine.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Repositories\HotelRepository.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Services\FileStorageService.cs" />
+    <Compile Include="Services\InvoiceService.cs" />
+    <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\ReservationService.cs" />
     <Compile Include="Services\RoomService.cs" />
     <Compile Include="ViewModels\ClientWindowViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ReservationWindowViewModel.cs" />
     <Compile Include="ViewModels\RoomWindowViewModel.cs" />
     <Compile Include="Views\ClientWindow.xaml.cs">
       <DependentUpon>ClientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InvoiceWindow.xaml.cs">
+      <DependentUpon>InvoiceWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReservationWindow.xaml.cs">
       <DependentUpon>ReservationWindow.xaml</DependentUpon>
@@ -105,6 +114,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ClientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InvoiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

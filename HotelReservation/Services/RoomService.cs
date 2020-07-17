@@ -1,6 +1,7 @@
 ﻿using HotelReservation.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace HotelReservation.Services
 {
@@ -45,7 +46,10 @@ namespace HotelReservation.Services
                 RoomLocation = "Floor 15, Section 36",
                 RoomNumber = "C23"
             });
+
         }
+
+        
 
         public ObservableCollection<Room> Rooms { get; set; }
     }

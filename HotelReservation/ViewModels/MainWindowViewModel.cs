@@ -1,10 +1,14 @@
 ﻿using HotelReservation.Models;
 using HotelReservation.Repositories;
+using HotelReservation.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Permissions;
+using System.Windows;
 
 namespace HotelReservation
 {
@@ -13,8 +17,15 @@ namespace HotelReservation
     {
         private Client client;
         private Reservation reservation;
+        private Invoice invoice;
         private Room room;
         private HotelRepository hotelRepository;
+        private const string NameSearchType = "Name";
+        private const string PhoneSearchType = "Phone";
+        private const string PNSearchType = "Personal Number";
+        private const string EmailSearchType = "Email";
+
+        private string searchText;
 
         public MainWindowViewModel()
         {
@@ -29,6 +40,18 @@ namespace HotelReservation
             AddRoomCommand = new DelegateCommand(OnAddRoomCommand);
             DeleteRoomCommand = new DelegateCommand(OnDeleteRoomCommand, () => Room != null);
             UpdateRoomCommand = new DelegateCommand(OnUpdateRoomCommand, () => Room != null);
+
+            AddInvoiceCommand = new DelegateCommand(OnAddInvoiceCommand);
+            DeleteInvoiceCommand = new DelegateCommand(OnDeleteInvoiceCommand, () => Invoice != null);
+            UpdateInvoiceCommand = new DelegateCommand(OnUpdateInvoiceCommand, () => Invoice != null); 
+
+            SearchCommand = new DelegateCommand(OnSearchCommand, () => !string.IsNullOrWhiteSpace(SearchText));
+
+            SearchTypeList = new List<string>();
+            SearchTypeList.Add(NameSearchType);
+            SearchTypeList.Add(PhoneSearchType);
+            SearchTypeList.Add(PNSearchType);
+            SearchTypeList.Add(EmailSearchType);
 
             hotelRepository = HotelRepository.Instance;
         }
@@ -57,6 +80,27 @@ namespace HotelReservation
             }
         }
 
+        public ObservableCollection<Invoice> Invoices
+        {
+            get 
+            {
+                return hotelRepository.InvoiceService.Invoices;
+            }
+        }
+
+        public string SearchText
+        {
+            get { return searchText; }
+            set
+            {
+                SetProperty(ref searchText, value);
+                SearchCommand.RaiseCanExecuteChanged();
+            }
+
+        }
+
+        public List<string> SearchTypeList { get; set; }
+
         public DelegateCommand AddClientCommand { get; set; }
 
         public DelegateCommand DeleteClientCommand { get; set; }
@@ -74,6 +118,16 @@ namespace HotelReservation
         public DelegateCommand DeleteRoomCommand { get; set; }
 
         public DelegateCommand UpdateRoomCommand { get; set; }
+
+        public DelegateCommand SearchCommand { get; set; }
+
+        public DelegateCommand AddInvoiceCommand { get; set; }
+
+        public DelegateCommand DeleteInvoiceCommand { get; set; }
+
+        public DelegateCommand UpdateInvoiceCommand { get; set; }
+
+        public string SearchType { get; set; }
 
         public Client Client
         {
@@ -113,6 +167,21 @@ namespace HotelReservation
                 SetProperty(ref room, value);
                 DeleteRoomCommand.RaiseCanExecuteChanged();
                 UpdateRoomCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public Invoice Invoice
+        {
+            get
+            {
+                return invoice;
+            }
+
+            set
+            {
+                SetProperty(ref invoice, value);
+                DeleteInvoiceCommand.RaiseCanExecuteChanged();
+                UpdateInvoiceCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -274,6 +343,74 @@ namespace HotelReservation
                     reservation.Copy(currentReservation);
                 }
             }
+        }
+
+        private void OnSearchCommand()
+        {
+            Client foundClient = null;
+            string messageText = null;
+            switch (SearchType)
+            {
+                case NameSearchType:
+                    foundClient = ClientsData.FirstOrDefault(x => x.FullName.Equals(SearchText.Trim()));
+                    messageText = foundClient?.FullName;
+                    break;
+
+                case PhoneSearchType:
+                    foundClient = ClientsData.SingleOrDefault(x => x.Phone.Equals(SearchText.Trim()));
+                    messageText = foundClient?.Phone;
+                    break;
+
+                case PNSearchType:
+                    foundClient = ClientsData.SingleOrDefault(x => x.PersonalNumber.Equals(SearchText.Trim()));
+                    messageText = foundClient?.PersonalNumber;
+                    break;
+
+                case EmailSearchType:
+                    foundClient = ClientsData.SingleOrDefault(x => x.Email.Equals(SearchText.Trim()));
+                    messageText = foundClient?.Email;
+                    break;
+            }
+
+            if (foundClient != null)
+            {
+                MessageBox.Show($"The list contains person with {SearchType.ToLower()}: {messageText} / On row: {ClientsData.IndexOf(foundClient) + 1}");
+            }
+            else
+            {
+                MessageBox.Show($"Not valid {SearchType.ToLower()}!");
+            }
+        }
+
+        private void OnAddInvoiceCommand()
+        {
+            InvoiceWindow window = new InvoiceWindow();
+
+            bool? result = window.ShowDialog();
+
+            if (result == true)
+            {
+                Invoice invoice = (window.DataContext as InvoiceWindowViewModel).Invoice;
+
+                if (invoice != null)
+                {
+                    int maxId = 0;
+                    if (Invoices.Count != 0)
+                    {
+                        maxId = Invoices.Select(x => x.Id).Max();
+                    }
+                    invoice.Id = maxId + 1;
+                    Invoices.Add(invoice);
+                }
+            }
+        }
+
+        private void OnDeleteInvoiceCommand()
+        {
+        }
+
+        private void OnUpdateInvoiceCommand()
+        {
         }
     }
 }

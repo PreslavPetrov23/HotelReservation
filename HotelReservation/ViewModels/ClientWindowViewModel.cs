@@ -5,12 +5,11 @@ namespace HotelReservation
 {
     public class ClientWindowViewModel : BindableBase
     {
+        private Client client;
         public ClientWindowViewModel()
         {
             this.Client = new Client();
         }
-
-        private Client client;
 
         public Client Client
         {
