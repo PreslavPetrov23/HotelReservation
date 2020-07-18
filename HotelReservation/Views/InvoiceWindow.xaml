@@ -30,7 +30,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -64,19 +63,40 @@
             <TextBox Grid.Column="3" Grid.Row="1" Text="Invoice" IsReadOnly="True"/>
 
         </Grid>
-        <Label Grid.Column="0" Grid.Row="1" Content="Invoice Line:" FontWeight="Bold" FontSize="15"/>
-        <DataGrid Height="300" Grid.Column="0" Grid.Row="2" Margin="3">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Code"/>
-                <DataGridTextColumn Header="Name"/>
-                <DataGridTextColumn Header="Quantity"/>
-                <DataGridTextColumn Header="Discount"/>
-                <DataGridTextColumn Header="Price"/>
-                <DataGridTextColumn Header="VAT"/>
-                <DataGridTextColumn Header="Line Total"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Content="Invoice Line:" FontWeight="Bold" FontSize="15"/>
+            <DataGrid Height="300" Grid.Row="1" Margin="3" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Code" Binding="{Binding ProductCode}"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding ProductName}"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+                    <DataGridTextColumn Header="Discount" Binding="{Binding Discount}"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                    <DataGridTextColumn Header="VAT" Binding="{Binding Vat}"/>
+                    <DataGridTextColumn Header="Line Total" Binding="{Binding LineTotal}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Width="30" Height="30" ToolTip="Add">
+                    <ContentControl Content="{StaticResource AddIcon}"/>
+                </Button>
+                <Button Grid.Column="1" Content="{StaticResource DeleteIcon}" Width="30" Height="30" ToolTip="Delete"/>
+            </Grid>
+        </Grid>
+        
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="3*"/>
