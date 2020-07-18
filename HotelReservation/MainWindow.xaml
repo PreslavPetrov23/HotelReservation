@@ -37,7 +37,7 @@
                 <MenuItem Header="Invoice">
                     <MenuItem Header="Add" Command="{Binding AddInvoiceCommand}"/>
                     <MenuItem Header="Update" Command="{Binding UpdateInvoiceCommand}"/>
-                    <MenuItem Header="Delete" Command="{Binding DeletInvoiceCommand}"/>
+                    <MenuItem Header="Delete" Command="{Binding DeleteInvoiceCommand}"/>
                 </MenuItem>
             </Menu>
         </Grid>

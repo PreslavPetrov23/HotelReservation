@@ -1,6 +1,5 @@
 ﻿using HotelReservation.Models;
 using HotelReservation.Repositories;
-using HotelReservation.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
