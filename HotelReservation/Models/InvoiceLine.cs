@@ -19,6 +19,7 @@ namespace HotelReservation.Models
         private decimal vat;
         private decimal lineTotal;
         private int productId;
+        private string measureUnit;
 
         public int Id
         {
@@ -74,6 +75,12 @@ namespace HotelReservation.Models
             set { SetProperty(ref lineTotal, value); }
         }
 
+        public string MeasureUnit
+        {
+            get { return measureUnit; }
+            set { SetProperty(ref measureUnit, value); }
+        }
+
         public void Copy(InvoiceLine copy)
         {
             Id = copy.Id;
@@ -86,6 +93,7 @@ namespace HotelReservation.Models
             Discount = copy.Discount;
             Vat = copy.Vat;
             LineTotal = copy.LineTotal;
+            MeasureUnit = copy.MeasureUnit;
         }
     }
 }

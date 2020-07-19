@@ -10,8 +10,11 @@ namespace HotelReservation.Models
     public class Product : BindableBase
     {
         private int id;
-        private int name;
-        private int code;
+        private string name;
+        private string code;
+        private decimal price;
+        private int vat;
+        private int discount;
 
         public int Id
         {
@@ -19,16 +22,42 @@ namespace HotelReservation.Models
             set { SetProperty(ref id, value); }
         }
 
-        public int Name
+        public string Name
         {
             get { return name; }
             set { SetProperty(ref name, value); }
         }
 
-        public int Code
+        public string Code
         {
             get { return code; }
             set { SetProperty(ref code, value); }
+        }
+
+        public decimal Price
+        {
+            get { return price; }
+            set { SetProperty(ref price, value); }
+        }
+
+        public int Vat
+        {
+            get { return vat; }
+            set { SetProperty(ref vat, value); }
+        }
+
+        public int Discount
+        {
+            get { return discount; }
+            set { SetProperty(ref discount, value); }
+        }
+
+        public string DisplayName
+        {
+            get
+            {
+                return $"{Code} - {Name}";
+            }
         }
     }
 }

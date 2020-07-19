@@ -21,6 +21,7 @@ namespace HotelReservation.Models
         private decimal vatAmount;
         private decimal subTotal;
         private string note;
+        private string currency;
 
         public int Id
         {
@@ -34,19 +35,19 @@ namespace HotelReservation.Models
             set { SetProperty(ref date, value); }
         }
 
-        public string DocumentNumber 
+        public string DocumentNumber
         {
             get { return documentNumber; }
             set { SetProperty(ref documentNumber, value); }
         }
 
-        public string CustomerName 
+        public string CustomerName
         {
             get { return customerName; }
             set { SetProperty(ref customerName, value); }
         }
 
-        public string CustomerAddress 
+        public string CustomerAddress
         {
             get { return customerAddress; }
             set { SetProperty(ref customerAddress, value); }
@@ -82,6 +83,12 @@ namespace HotelReservation.Models
             set { SetProperty(ref note, value); }
         }
 
+        public string Currency
+        {
+            get { return currency; }
+            set { SetProperty(ref currency, value); }
+        }
+
         public void Copy(Invoice copy)
         {
             Id = copy.Id;
@@ -94,6 +101,7 @@ namespace HotelReservation.Models
             VatAmount = copy.VatAmount;
             SubTotal = copy.SubTotal;
             Note = copy.Note;
+            Currency = copy.Currency;
         }
     }
 }

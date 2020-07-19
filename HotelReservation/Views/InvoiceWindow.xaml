@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:prism ="http://prismlibrary.com/"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="InvoiceWindow" Height="680" Width="1024">
+        Title="InvoiceWindow" Height="820" Width="1024">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -23,11 +24,23 @@
             <Setter Property="Margin" Value="3"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
-
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="{x:Type xctk:DecimalUpDown}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="{x:Type xctk:IntegerUpDown}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -64,20 +77,77 @@
             <TextBox Grid.Column="3" Grid.Row="1" Text="Invoice" IsReadOnly="True"/>
 
         </Grid>
-        <Grid Grid.Row="1">
+        <Expander Grid.Row="1" IsExpanded="True" Header="Invoice Line">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Content="Product Code:"/>
+                <ComboBox Grid.Column="1" Grid.Row="0" DisplayMemberPath="DisplayName" SelectedValuePath="Code" 
+                          SelectedValue="{Binding CurrentInvoiceLine.ProductCode, Mode=TwoWay}"
+                          SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
+                          ItemsSource="{Binding Products}"/>
+
+                <Label Grid.Column="2" Grid.Row="0" Content="Product Name:"/>
+                <ComboBox Grid.Column="3" Grid.Row="0" DisplayMemberPath="Name" SelectedValuePath="Name"
+                          SelectedValue="{Binding CurrentInvoiceLine.ProductName, Mode=TwoWay}"
+                          SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
+                          ItemsSource="{Binding Products}"/>
+
+                <Label Grid.Column="0" Grid.Row="1" Content="Quantity:"/>
+                <xctk:DecimalUpDown Grid.Column="1" Grid.Row="1"
+                                    FormatString="F2" Value="{Binding CurrentInvoiceLine.Quantity, Mode=TwoWay}" Increment="1"/>
+                <!--<TextBox Grid.Column="1" Grid.Row="1"
+                         Text="{Binding CurrentInvoiceLine.Quantity, Mode=TwoWay}"/>-->
+
+                <Label Grid.Column="2" Grid.Row="1" Content="Discount:"/>
+                <xctk:IntegerUpDown Grid.Column="4" Grid.Row="1" Value="{Binding CurrentInvoiceLine.Discount, Mode=TwoWay}"/>
+                <!--<TextBox Grid.Column="4" Grid.Row="1" 
+                         Text="{Binding CurrentInvoiceLine.Discount, Mode=TwoWay}"/>-->
+
+                <Label Grid.Column="0" Grid.Row="2" Content="Price:"/>
+                <xctk:DecimalUpDown  Grid.Column="1" Grid.Row="2"
+                                     FormatString="F2" Value="{Binding CurrentInvoiceLine.Price, Mode=TwoWay}" Increment="1"/>
+                <!--<TextBox Grid.Column="1" Grid.Row="2"
+                         Text="{Binding CurrentInvoiceLine.Price, Mode=TwoWay}"/>-->
+
+                <Label Grid.Column="2" Grid.Row="2" Content="Measure Unit:"/>
+                <ComboBox Grid.Column="3" Grid.Row="2" SelectedValue="{Binding CurrentInvoiceLine.MeasureUnit, Mode=TwoWay}"
+                          ItemsSource="{Binding MeasureUnits}"
+                          SelectedIndex="0"/>
+
+                <Button Grid.Column="0" Grid.Row="3" Width="30" Height="30" ToolTip="Add"
+                        Command="{Binding AddInvoiceLineCommand}"
+                        Content="{StaticResource AddIcon}"
+                        HorizontalAlignment="Left"/>
+            </Grid>
+        </Expander>
+
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Content="Invoice Line:" FontWeight="Bold" FontSize="15"/>
-            <DataGrid Height="300" Grid.Row="1" Margin="3" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="False"
+            <Label Grid.Row="0" Content="Invoice Lines:" FontWeight="Bold" FontSize="15"/>
+            <DataGrid Height="300" Grid.Row="1" Margin="3" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
                       SelectedItem="{Binding SelectedInvoiceLine, Mode=TwoWay}" ItemsSource="{Binding InvoiceLines}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Code" Binding="{Binding ProductCode}"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding ProductName}"/>
                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+                    <DataGridTextColumn Header="Measure Unit" Binding="{Binding MeasureUnit}"/>
                     <DataGridTextColumn Header="Discount" Binding="{Binding Discount}"/>
                     <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
                     <DataGridTextColumn Header="VAT" Binding="{Binding Vat}"/>
@@ -91,15 +161,13 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Width="30" Height="30" ToolTip="Add" Command="{Binding AddInvoiceLineCommand}">
-                    <ContentControl Content="{StaticResource AddIcon}"/>
-                </Button>
+
                 <Button Grid.Column="1" Content="{StaticResource DeleteIcon}" Width="30" Height="30" ToolTip="Delete" 
                         Command="{Binding DeleteInvoiceLineCommand}"/>
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="3*"/>

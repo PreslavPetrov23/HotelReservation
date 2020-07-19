@@ -31,6 +31,7 @@ namespace HotelReservation.Repositories
             ReservationService = new ReservationService();
             RoomService = new RoomService();
             InvoiceService = new InvoiceService();
+            ProductService = new ProductService();
         }
 
         public ClientService ClientService { get; set; }
@@ -40,5 +41,7 @@ namespace HotelReservation.Repositories
         public RoomService RoomService { get; set; }
 
         public InvoiceService InvoiceService { get; set; }
+
+        public ProductService ProductService { get; set; }
     }
 }

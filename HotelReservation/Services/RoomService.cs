@@ -22,7 +22,7 @@ namespace HotelReservation.Services
 
             Rooms.Add(new Room()
             {
-                Id = 1,
+                Id = 2,
                 Extras = "One King Size Bed",
                 RoomCapacity = "3",
                 RoomLocation = "Floor 15, Section 36",
@@ -31,7 +31,7 @@ namespace HotelReservation.Services
 
             Rooms.Add(new Room()
             {
-                Id = 1,
+                Id = 3,
                 Extras = "Two King Size Beds and One Person Bed",
                 RoomCapacity = "3",
                 RoomLocation = "Floor 15, Section 36",
@@ -40,16 +40,13 @@ namespace HotelReservation.Services
            
             Rooms.Add(new Room()
             {
-                Id = 1,
+                Id = 4,
                 Extras = "Three King Size Bed",
                 RoomCapacity = "3",
                 RoomLocation = "Floor 15, Section 36",
                 RoomNumber = "C23"
             });
-
         }
-
-        
 
         public ObservableCollection<Room> Rooms { get; set; }
     }
