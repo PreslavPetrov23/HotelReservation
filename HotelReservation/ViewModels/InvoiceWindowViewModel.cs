@@ -99,7 +99,8 @@ namespace HotelReservation
 
         private void CalculateInvoiceLine (InvoiceLine line)
         {
-            line.LineTotal = Total * Discount / 100; 
+            decimal discountSum = line.Price * line.Discount / 100;
+            line.LineTotal = (line.Price - discountSum) * line.Quantity;
         }
 
         private void OnAddInvoiceLineCommand()
@@ -110,6 +111,7 @@ namespace HotelReservation
                 return;
             }
             InvoiceLines.Add(CurrentInvoiceLine);
+            CalculateInvoiceLine(CurrentInvoiceLine);
             CurrentInvoiceLine = new InvoiceLine();
         }
 
